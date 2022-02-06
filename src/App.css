@@ -23,6 +23,10 @@ body {
   flex-direction: column;
 }
 
+.articleImage{
+  width: 100%;
+}
+
 @media(min-width: 1025px){
   #articleGrid {
     grid-template-columns: 1fr 2fr 1fr;
