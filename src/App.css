@@ -11,6 +11,10 @@ body {
   font-size: 32px;
 }
 
+h2{
+  margin-bottom: 0;
+}
+
 /*Layout*/
 #articleGrid {
   padding: 50px;
@@ -21,10 +25,18 @@ body {
 .article{
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .articleImage{
   width: 100%;
+}
+
+a{
+
+  color:cadetblue;
+  font-weight:  600;
+  text-decoration: none;
 }
 
 @media(min-width: 1025px){
