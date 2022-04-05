@@ -7,16 +7,16 @@ const Article = (article) => {
   
   return (
     <div className='article'>
-      <img className='articleImage' src={article.urlToImage} />
+      <img className='articleImage' src={article.urlToImage} alt={article.title}/>
       <h2>{article.title}</h2>
-      <p>{article.description}</p>
-      <a>Read More...</a>
+      <p>{article.description.replace('Read more...', '')}</p>
+      <a href={article.url} target="blank">Read More</a>
     </div>
   );
 }
 
 const ArticleGrid = (props) => {
-  if(props.articles != undefined && props.articles != ''){
+  if(props.articles !== undefined && props.articles !== ''){
     console.log('ArticleGrid ', props.articles)
     return (
       <div id='articleGrid'>
@@ -37,10 +37,7 @@ function App() {
   const getArticles = React.useCallback(() => {
     axios({
       'method': 'GET',
-      'url': 'https://newsapi.org/v2/everything?q=%22giant%20panda%22&searchIn=title&from=2022-02-05&to=2019-02-05&sortBy=popularity',
-      'headers': {
-        'X-API-Key': process.env.REACT_APP_NEWS_API_KEY
-      }
+      'url': 'https://newsapi.org/v2/everything?q=%22panda%22%20AND%20NOT%20fiat%20AND%20NOT%20Nike%20AND%20NOT%20%22New%20Balance%22 &searchIn=title&apikey=' + process.env.REACT_APP_NEWS_API_KEY,
     })
     .then((response) => {
       setArticles(response.data.articles)
