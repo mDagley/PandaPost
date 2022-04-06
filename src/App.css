@@ -5,6 +5,10 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+body  *{
+  box-sizing: border-box;
+}
+
 .title{
   text-align: center;
   font-family: 'Grenze Gotisch', cursive;
@@ -13,6 +17,49 @@ body {
 
 h2{
   margin-bottom: 0;
+}
+
+/*Navigation*/
+header{
+  display: flex;
+}
+
+.search-bar{
+  margin-right: 20px;
+}
+
+.search-bar .search-button{
+  background-color: #FFF;
+  color: #000;
+  border: none;
+  height: 20px;
+  box-shadow: none;
+  cursor: pointer
+}
+
+.search-bar .search-field{
+  border: none;
+  height: 20px;
+}
+
+header.nav-bar{
+  width: 100%;
+  background-color: #000;
+  color: #FFF;
+  padding: 10px 50px 10px 10px
+}
+
+.nav-bar ul{
+  display: flex;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-bar ul li{
+  list-style: none;
+  margin-right: 20px;
+  font-weight: 500;
 }
 
 /*Layout*/

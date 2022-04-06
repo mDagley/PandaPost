@@ -53,6 +53,21 @@ function App() {
 
   return (
     <div className="App">
+      <header className='nav-bar'>
+        <div className='search-bar'>
+          <input type="text" className='search-field'></input>
+          <input type="submit" value="Search" className='search-button'></input>
+        </div>
+        <nav>
+          <ul>
+            <li>Pandas</li>
+            <li>Tech</li>
+            <li>Food</li>
+            <li>Travel</li>
+            <li>Politics</li>
+          </ul>
+        </nav>
+      </header>
       <div className='title'>
         <h1>The Panda Post</h1>
       </div>
