@@ -11,7 +11,7 @@ const Article = (article) => {
       {article.urlToImage && <img className='articleImage' src={article.urlToImage} alt={article.title} referrerPolicy="no-referrer"/>}
       <h2>{article.title}</h2>
       <p>{(article.description || '').replace('Read more...', '')}</p>
-      <a href={article.url} target="blank">Read More</a>
+      <a href={article.url} target="_blank" rel="noopener noreferrer">Read More</a>
     </div>
   );
 }
