@@ -118,7 +118,6 @@ function App() {
   return (
     <div className="App">
       <header className='masthead'>
-        <div className='masthead-rule'></div>
         <div className='masthead-top'>
           <div className='masthead-search'>
             <input type="text" className='search-field' placeholder='Search articles...'/>
@@ -135,7 +134,6 @@ function App() {
           </h1>
           <p className='masthead-tagline'>your daily dose of panda news</p>
         </div>
-        <div className='masthead-rule'></div>
         <nav className='masthead-nav'>
           <ul>
             <li>Pandas</li>
@@ -145,7 +143,6 @@ function App() {
             <li>Politics</li>
           </ul>
         </nav>
-        <div className='masthead-rule thin'></div>
       </header>
       {partialError && (
         <div className='warning-banner'>
