@@ -343,7 +343,6 @@ body {
   animation: fadeUp 0.45s ease both;
   backdrop-filter: blur(6px);
   margin-bottom: 20px;
-  overflow: hidden;
 }
 
 .article:nth-child(1)  { animation-delay: 0.04s; }
@@ -366,7 +365,6 @@ body {
 
 .article-image-wrapper {
   position: relative;
-  overflow: hidden;
 }
 
 /* Pink rotated frame — same size as the image, corners clipped by card */
@@ -416,6 +414,7 @@ body {
   height: 190px;
   object-fit: cover;
   display: block;
+  border-radius: 9px 9px 0 0;
   transition: transform 0.5s ease;
 }
 
@@ -429,6 +428,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 3rem;
+  border-radius: 9px 9px 0 0;
 }
 .article-no-image::before { content: '🐼'; }
 
