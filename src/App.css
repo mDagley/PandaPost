@@ -336,7 +336,6 @@ body {
   display: inline-block;
   width: 100%;
   background: rgba(255,255,255,0.9);
-  border-radius: 10px;
   box-shadow: 0 4px 24px rgba(200,150,210,0.13);
   border: 1.5px solid var(--card-border);
   transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease;
@@ -414,7 +413,6 @@ body {
   height: 190px;
   object-fit: cover;
   display: block;
-  border-radius: 9px 9px 0 0;
   transition: transform 0.5s ease;
 }
 
@@ -428,7 +426,6 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 3rem;
-  border-radius: 9px 9px 0 0;
 }
 .article-no-image::before { content: '🐼'; }
 
