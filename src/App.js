@@ -108,7 +108,7 @@ function App() {
         setError(null);
 
         const newsArticles = newsResult.status === 'fulfilled'
-          ? newsResult.value.data.articles || []
+          ? (newsResult.value.data.articles || []).map(a => ({ ...a, source: 'NewsAPI' }))
           : [];
         const guardianArticles = guardianResult.status === 'fulfilled'
           ? (guardianResult.value.data.response.results || []).map(item => ({
@@ -117,6 +117,7 @@ function App() {
               urlToImage: item.fields?.thumbnail || null,
               description: item.fields?.trailText || '',
               publishedAt: item.webPublicationDate || null,
+              source: 'Guardian',
             }))
           : [];
         const nytArticles = nytResult.status === 'fulfilled'
@@ -128,6 +129,7 @@ function App() {
                 : null,
               description: doc.abstract || doc.lead_paragraph || '',
               publishedAt: doc.pub_date || null,
+              source: 'NYT',
             }))
           : [];
 
