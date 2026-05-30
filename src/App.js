@@ -34,11 +34,11 @@ const ArticleGrid = ({ articles, error }) => {
 };
 
 const CATEGORY_FILTERS = {
-  Pandas:   null,
-  Tech:     /tech|technology|research|scientist|study|data|genome|dna/i,
-  Food:     /food|eat|diet|bamboo|feed|nutrition|hungry/i,
-  Travel:   /zoo|safari|wild|habitat|china|sanctuary|reserve|park|born|birth/i,
-  Politics: /conservation|law|protect|policy|government|endangered|trade|treaty|illegal/i,
+  All:         null,
+  Cubs:        /cub|baby|babies|born|birth|newborn|infant|juvenile|young|pup/i,
+  Conservation:/conservation|endangered|habitat|protect|wildlife|extinct|species|poach|illegal|forest|wild/i,
+  Zoos:        /zoo|captive|breed|breeding|sanctuary|reserve|enclosure|aquarium|keeper|loan/i,
+  Diplomacy:   /diplomacy|diplomatic|gift|gifted|loan|lend|donated|ambassador|bilateral|international|relations/i,
 };
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
   const [pageSize, setPageSize] = useState(20);
   const [error, setError] = useState(null);
   const [partialError, setPartialError] = useState(null);
-  const [activeCategory, setActiveCategory] = useState('Pandas');
+  const [activeCategory, setActiveCategory] = useState('All');
 
   const getArticles = React.useCallback(() => {
     const oneMonthAgo = new Date();
