@@ -221,6 +221,7 @@ body {
 .articles-controls {
   display: flex;
   justify-content: flex-end;
+  gap: 16px;
   padding: 20px 28px 0;
   max-width: 1400px;
   margin: 0 auto;
@@ -385,6 +386,17 @@ body {
 
 .article-body {
   padding: 14px 18px 20px;
+}
+
+.article-date {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 6px;
+  opacity: 0.8;
 }
 
 /* Tiny stars above the title */

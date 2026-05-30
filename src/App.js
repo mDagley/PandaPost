@@ -4,6 +4,11 @@ import axios from 'axios';
 import Pagination from './Pagination';
 
 
+const formatDate = (dateStr) => {
+  if (!dateStr) return null;
+  return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
 const Article = (article) => {
   return (
     <div className='article'>
@@ -14,6 +19,7 @@ const Article = (article) => {
         }
       </div>
       <div className='article-body'>
+        {article.publishedAt && <span className='article-date'>{formatDate(article.publishedAt)}</span>}
         <h2>{article.title}</h2>
         <p>{(article.description || '').replace('Read more...', '')}</p>
         <a href={article.url} className='read-more' target="_blank" rel="noopener noreferrer">Read More</a>
@@ -48,6 +54,7 @@ function App() {
   const [error, setError] = useState(null);
   const [partialError, setPartialError] = useState(null);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [sortOrder, setSortOrder] = useState('date-desc');
 
   const getArticles = React.useCallback(() => {
     const oneMonthAgo = new Date();
@@ -92,6 +99,7 @@ function App() {
               url: item.webUrl,
               urlToImage: item.fields?.thumbnail || null,
               description: item.fields?.trailText || '',
+              publishedAt: item.webPublicationDate || null,
             }))
           : [];
 
@@ -121,8 +129,16 @@ function App() {
         : articles)
     : [];
 
-  const totalPages = Math.ceil(filteredArticles.length / pageSize);
-  const displayedArticles = filteredArticles.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const sortedArticles = [...filteredArticles].sort((a, b) => {
+    if (sortOrder === 'date-desc') return new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0);
+    if (sortOrder === 'date-asc')  return new Date(a.publishedAt || 0) - new Date(b.publishedAt || 0);
+    if (sortOrder === 'title-asc') return (a.title || '').localeCompare(b.title || '');
+    if (sortOrder === 'title-desc') return (b.title || '').localeCompare(a.title || '');
+    return 0;
+  });
+
+  const totalPages = Math.ceil(sortedArticles.length / pageSize);
+  const displayedArticles = sortedArticles.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   const handlePageSizeChange = (newSize) => {
     setPageSize(newSize);
@@ -175,7 +191,16 @@ function App() {
       )}
       <div className='articles-controls'>
         <label className='page-size-label'>
-          Articles per page:
+          Sort by:
+          <select value={sortOrder} onChange={e => { setSortOrder(e.target.value); setCurrentPage(1); }}>
+            <option value='date-desc'>Newest first</option>
+            <option value='date-asc'>Oldest first</option>
+            <option value='title-asc'>Title A–Z</option>
+            <option value='title-desc'>Title Z–A</option>
+          </select>
+        </label>
+        <label className='page-size-label'>
+          Per page:
           <select value={pageSize} onChange={e => handlePageSizeChange(Number(e.target.value))}>
             <option value={10}>10</option>
             <option value={20}>20</option>
