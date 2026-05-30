@@ -54,6 +54,32 @@ const SkeletonCard = () => (
   </div>
 );
 
+const FeaturedArticle = ({ article }) => {
+  if (!article) return null;
+  const sourceCls = article.source
+    ? `source-badge source-badge--${article.source.toLowerCase().replace(/\s+/g, '')}`
+    : null;
+  const meta = [article.source, formatDate(article.publishedAt)].filter(Boolean).join(' · ');
+  return (
+    <div className='featured-article'>
+      <div className='featured-image-wrapper'>
+        <span className='featured-label'>Featured</span>
+        {sourceCls && <span className={sourceCls}>{article.source}</span>}
+        {article.urlToImage
+          ? <img className='featured-image' src={article.urlToImage} alt={article.title} referrerPolicy="no-referrer"/>
+          : <div className='article-no-image featured-no-image'/>
+        }
+      </div>
+      <div className='featured-body'>
+        {meta && <span className='article-meta'>{meta}</span>}
+        <h2 className='featured-title'>{article.title}</h2>
+        <p className='featured-description'>{decodeHtml(article.description).replace('Read more...', '').trim()}</p>
+        <a href={article.url} className='read-more' target="_blank" rel="noopener noreferrer">Read More</a>
+      </div>
+    </div>
+  );
+};
+
 const ArticleGrid = ({ articles, error }) => {
   if (error) return <h3 className='error-message'>{error}</h3>;
   if (!articles || articles === '') return (
@@ -285,5 +311,5 @@ function App() {
   );
 }
 
-export { SkeletonCard };
+export { SkeletonCard, FeaturedArticle };
 export default App;
