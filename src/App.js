@@ -129,8 +129,12 @@ function App() {
           </div>
         </div>
         <div className='masthead-title'>
-          <h1>The Panda Post</h1>
-          <p className='masthead-tagline'>The World's Premier Source for Panda News</p>
+          <h1>
+            <span className='masthead-panda'>🐼</span>
+            The Panda Post
+            <span className='masthead-panda'>🐼</span>
+          </h1>
+          <p className='masthead-tagline'>✦ your daily dose of panda cuteness ✦</p>
         </div>
         <div className='masthead-rule'></div>
         <nav className='masthead-nav'>
