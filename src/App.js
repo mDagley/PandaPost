@@ -9,6 +9,13 @@ const formatDate = (dateStr) => {
   return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 };
 
+const decodeHtml = (str) => {
+  if (!str) return '';
+  const txt = document.createElement('textarea');
+  txt.innerHTML = str;
+  return txt.value.replace(/<[^>]*>/g, '');
+};
+
 const Article = (article) => {
   return (
     <div className='article'>
@@ -21,7 +28,7 @@ const Article = (article) => {
       <div className='article-body'>
         {article.publishedAt && <span className='article-date'>{formatDate(article.publishedAt)}</span>}
         <h2>{article.title}</h2>
-        <p>{(article.description || '').replace('Read more...', '')}</p>
+        <p>{decodeHtml(article.description).replace('Read more...', '').trim()}</p>
         <a href={article.url} className='read-more' target="_blank" rel="noopener noreferrer">Read More</a>
       </div>
     </div>
@@ -50,7 +57,7 @@ const CATEGORY_FILTERS = {
 function App() {
   const [articles, setArticles] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(9);
   const [error, setError] = useState(null);
   const [partialError, setPartialError] = useState(null);
   const [activeCategory, setActiveCategory] = useState('All');
@@ -71,20 +78,29 @@ function App() {
       url: `https://content.guardianapis.com/search?q=%22giant%20panda%22%20OR%20%22red%20panda%22&show-fields=thumbnail,trailText&page-size=200&api-key=${process.env.REACT_APP_GUARDIAN_API_KEY}`,
     });
 
-    Promise.allSettled([newsApiCall, guardianApiCall])
-      .then(([newsResult, guardianResult]) => {
-        const bothFailed = newsResult.status === 'rejected' && guardianResult.status === 'rejected';
+    const nytApiCall = axios({
+      method: 'GET',
+      url: `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=%22giant+panda%22+OR+%22red+panda%22&sort=newest&api-key=${process.env.REACT_APP_NYTIMES_API_KEY}`,
+    });
 
-        if (bothFailed) {
+    Promise.allSettled([newsApiCall, guardianApiCall, nytApiCall])
+      .then(([newsResult, guardianResult, nytResult]) => {
+        const allFailed = [newsResult, guardianResult, nytResult].every(r => r.status === 'rejected');
+
+        if (allFailed) {
           setError('Failed to load articles. Please try again later.');
           setArticles([]);
           return;
         }
 
-        const oneFailed = newsResult.status === 'rejected' || guardianResult.status === 'rejected';
-        if (oneFailed) {
-          const failedSource = newsResult.status === 'rejected' ? 'NewsAPI' : 'The Guardian';
-          setPartialError(`Some articles may be missing — ${failedSource} could not be reached.`);
+        const failedSources = [
+          newsResult.status === 'rejected' && 'NewsAPI',
+          guardianResult.status === 'rejected' && 'The Guardian',
+          nytResult.status === 'rejected' && 'NY Times',
+        ].filter(Boolean);
+
+        if (failedSources.length > 0) {
+          setPartialError(`Some articles may be missing — ${failedSources.join(', ')} could not be reached.`);
         } else {
           setPartialError(null);
         }
@@ -102,6 +118,17 @@ function App() {
               publishedAt: item.webPublicationDate || null,
             }))
           : [];
+        const nytArticles = nytResult.status === 'fulfilled'
+          ? (nytResult.value.data.response.docs || []).map(doc => ({
+              title: doc.headline?.main || '',
+              url: doc.web_url,
+              urlToImage: doc.multimedia?.[0]?.url
+                ? `https://www.nytimes.com/${doc.multimedia[0].url}`
+                : null,
+              description: doc.abstract || doc.lead_paragraph || '',
+              publishedAt: doc.pub_date || null,
+            }))
+          : [];
 
         const isExcluded = (text) => /krystal niu|acrobat/i.test(text || '');
         const isPandaRelated = (article) =>
@@ -109,7 +136,7 @@ function App() {
           !isExcluded(article.title) &&
           !isExcluded(article.description);
 
-        setArticles([...newsArticles, ...guardianArticles].filter(isPandaRelated));
+        setArticles([...newsArticles, ...guardianArticles, ...nytArticles].filter(isPandaRelated));
         setCurrentPage(1);
       })
       .catch(() => {
@@ -202,9 +229,9 @@ function App() {
         <label className='page-size-label'>
           Per page:
           <select value={pageSize} onChange={e => handlePageSizeChange(Number(e.target.value))}>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={50}>50</option>
+            <option value={9}>9</option>
+            <option value={18}>18</option>
+            <option value={48}>48</option>
           </select>
         </label>
       </div>
