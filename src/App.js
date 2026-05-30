@@ -80,6 +80,21 @@ const FeaturedArticle = ({ article }) => {
   );
 };
 
+const Footer = () => (
+  <footer className='site-footer'>
+    <div className='footer-decoration'>🎋 🐼 🎋</div>
+    <div className='footer-title'>The Panda Post</div>
+    <div className='footer-credits'>
+      Powered by{' '}
+      <a href="https://newsapi.org" target="_blank" rel="noopener noreferrer">NewsAPI</a>
+      {' · '}
+      <a href="https://www.theguardian.com" target="_blank" rel="noopener noreferrer">The Guardian</a>
+      {' · '}
+      <a href="https://developer.nytimes.com" target="_blank" rel="noopener noreferrer">NY Times</a>
+    </div>
+  </footer>
+);
+
 const ArticleGrid = ({ articles, error }) => {
   if (error) return <h3 className='error-message'>{error}</h3>;
   if (!articles || articles === '') return (
@@ -313,6 +328,7 @@ function App() {
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
+      <Footer />
     </div>
   );
 }

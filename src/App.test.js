@@ -6,7 +6,8 @@ jest.mock('axios');
 
 test('renders masthead title', () => {
   render(<App />);
-  expect(screen.getByText(/The Panda Post/i)).toBeInTheDocument();
+  const h1 = screen.getByRole('heading', { level: 1 });
+  expect(h1).toHaveTextContent('The Panda Post');
 });
 
 test('SkeletonCard renders a skeleton article card', () => {
