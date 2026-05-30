@@ -46,7 +46,20 @@ body {
 /* ── Masthead ─────────────────────────────────── */
 
 .masthead {
-  background: linear-gradient(160deg, #FFE4F0 0%, #EFE4FF 100%);
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px, transparent 18px,
+      rgba(100,160,80,0.025) 18px, rgba(100,160,80,0.025) 22px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 58px,
+      rgba(100,160,80,0.03) 58px, rgba(100,160,80,0.03) 61px,
+      transparent 61px, transparent 98px,
+      rgba(100,160,80,0.02) 98px, rgba(100,160,80,0.02) 101px
+    ),
+    linear-gradient(160deg, #FFE4F0 0%, #EFE4FF 100%);
   border-top: 3px solid var(--pink);
   box-shadow: 0 2px 20px rgba(200,150,200,0.12);
 }
@@ -542,14 +555,30 @@ body {
 
 .article-no-image {
   width: 100%;
-  height: 150px;
+  height: 180px;
   background: linear-gradient(135deg, var(--pink-pale), var(--lavender-light));
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  gap: 8px;
 }
-.article-no-image::before { content: '🐼'; }
+
+.article-no-image::before {
+  content: '🐼';
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.article-no-image::after {
+  content: 'No image available';
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-family: 'Josefin Sans', sans-serif;
+}
 
 /* ── Card body ────────────────────────────────── */
 
