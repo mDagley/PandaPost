@@ -15,24 +15,23 @@ const Article = (article) => {
   );
 }
 
-const ArticleGrid = (props) => {
-  if(props.articles !== undefined && props.articles !== ''){
-    console.log('ArticleGrid ', props.articles)
-    return (
-      <div id='articleGrid'>
-        {props.articles.map(article => <Article key={article.title} {...article} />)}
-      </div>
-    )
-  }
-
-  else {
-    return (<h3>Loading...</h3>)
-  }
-
-}
+const ArticleGrid = ({ articles, error }) => {
+  if (error) return <h3 className='error-message'>{error}</h3>;
+  if (!articles || articles === '') return <h3>Loading...</h3>;
+  if (articles.length === 0) return <h3>No articles found.</h3>;
+  return (
+    <div id='articleGrid'>
+      {articles.map(article => <Article key={article.title} {...article} />)}
+    </div>
+  );
+};
 
 function App() {
-  let [articles, setArticles] = useState('');
+  const [articles, setArticles] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  const [error, setError] = useState(null);
+  const [partialError, setPartialError] = useState(null);
 
   const getArticles = React.useCallback(() => {
     const oneMonthAgo = new Date();
@@ -51,6 +50,23 @@ function App() {
 
     Promise.allSettled([newsApiCall, guardianApiCall])
       .then(([newsResult, guardianResult]) => {
+        const bothFailed = newsResult.status === 'rejected' && guardianResult.status === 'rejected';
+
+        if (bothFailed) {
+          setError('Failed to load articles. Please try again later.');
+          setArticles([]);
+          return;
+        }
+
+        const oneFailed = newsResult.status === 'rejected' || guardianResult.status === 'rejected';
+        if (oneFailed) {
+          const failedSource = newsResult.status === 'rejected' ? 'NewsAPI' : 'The Guardian';
+          setPartialError(`Some articles may be missing — ${failedSource} could not be reached.`);
+        } else {
+          setPartialError(null);
+        }
+        setError(null);
+
         const newsArticles = newsResult.status === 'fulfilled'
           ? newsResult.value.data.articles || []
           : [];
@@ -62,20 +78,21 @@ function App() {
               description: item.fields?.trailText || '',
             }))
           : [];
+
         const isExcluded = (text) => /krystal niu|acrobat/i.test(text || '');
         const isPandaRelated = (article) =>
           /giant panda|red panda/i.test(article.title) &&
           !isExcluded(article.title) &&
           !isExcluded(article.description);
-        const combined = [...newsArticles, ...guardianArticles]
-          .filter(isPandaRelated);
-        setArticles(combined);
+
+        setArticles([...newsArticles, ...guardianArticles].filter(isPandaRelated));
+        setCurrentPage(1);
       });
   }, []);
 
   useEffect(() => {
-    getArticles()
-  }, [getArticles])
+    getArticles();
+  }, [getArticles]);
 
   return (
     <div className="App">
@@ -97,7 +114,13 @@ function App() {
       <div className='title'>
         <h1>The Panda Post</h1>
       </div>
-      <ArticleGrid articles = {articles}/>
+      {partialError && (
+        <div className='warning-banner'>
+          {partialError}
+          <button onClick={() => setPartialError(null)}>✕</button>
+        </div>
+      )}
+      <ArticleGrid articles={articles} error={error} />
     </div>
   );
 }
