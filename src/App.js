@@ -62,6 +62,7 @@ function App() {
   const [partialError, setPartialError] = useState(null);
   const [activeCategory, setActiveCategory] = useState('All');
   const [sortOrder, setSortOrder] = useState('date-desc');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const getArticles = React.useCallback(() => {
     const oneMonthAgo = new Date();
@@ -150,11 +151,19 @@ function App() {
   }, [getArticles]);
 
   const categoryRegex = CATEGORY_FILTERS[activeCategory];
-  const filteredArticles = Array.isArray(articles)
+  const categoryFiltered = Array.isArray(articles)
     ? (categoryRegex
         ? articles.filter(a => categoryRegex.test(a.title) || categoryRegex.test(a.description || ''))
         : articles)
     : [];
+
+  const searchLower = searchQuery.trim().toLowerCase();
+  const filteredArticles = searchLower
+    ? categoryFiltered.filter(a =>
+        (a.title || '').toLowerCase().includes(searchLower) ||
+        (a.description || '').toLowerCase().includes(searchLower)
+      )
+    : categoryFiltered;
 
   const sortedArticles = [...filteredArticles].sort((a, b) => {
     if (sortOrder === 'date-desc') return new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0);
@@ -182,8 +191,14 @@ function App() {
       <header className='masthead'>
         <div className='masthead-top'>
           <div className='masthead-search'>
-            <input type="text" className='search-field' placeholder='Search articles...'/>
-            <input type="submit" value="Search" className='search-button'/>
+            <input
+              type="text"
+              className='search-field'
+              placeholder='Search articles...'
+              value={searchQuery}
+              onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+            />
+            <input type="submit" value="Search" className='search-button' onClick={() => setCurrentPage(1)}/>
           </div>
           <div className='masthead-date'>
             {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
