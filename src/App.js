@@ -237,6 +237,10 @@ function App() {
     setCurrentPage(1);
   };
 
+  const showFeatured = currentPage === 1 && displayedArticles.length >= 2;
+  const featuredArticle = showFeatured ? displayedArticles[0] : null;
+  const gridArticles = showFeatured ? displayedArticles.slice(1) : displayedArticles;
+
   return (
     <div className="App">
       <header className='masthead'>
@@ -301,7 +305,8 @@ function App() {
           </select>
         </label>
       </div>
-      <ArticleGrid articles={displayedArticles} error={error} />
+      <FeaturedArticle article={featuredArticle} />
+      <ArticleGrid articles={gridArticles} error={error} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
