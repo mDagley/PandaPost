@@ -280,6 +280,7 @@ function App() {
           </ul>
         </nav>
       </header>
+      <div className='section-divider'>🎋</div>
       {partialError && (
         <div className='warning-banner'>
           {partialError}

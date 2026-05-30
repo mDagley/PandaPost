@@ -48,7 +48,6 @@ body {
 .masthead {
   background: linear-gradient(160deg, #FFE4F0 0%, #EFE4FF 100%);
   border-top: 3px solid var(--pink);
-  border-bottom: 1px solid rgba(200,150,210,0.2);
   box-shadow: 0 2px 20px rgba(200,150,200,0.12);
 }
 
@@ -139,6 +138,34 @@ body {
 .masthead-nav li.active {
   font-weight: 700;
   cursor: default;
+}
+
+/* ── Section Divider ──────────────────────────── */
+
+.section-divider {
+  position: relative;
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 14px 0 0;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  position: absolute;
+  top: calc(50% + 1px);
+  width: calc(50% - 28px);
+  height: 1px;
+}
+
+.section-divider::before {
+  left: 0;
+  background: linear-gradient(90deg, transparent, rgba(200,150,210,0.3));
+}
+
+.section-divider::after {
+  right: 0;
+  background: linear-gradient(270deg, transparent, rgba(200,150,210,0.3));
 }
 
 /* ── Search ───────────────────────────────────── */
