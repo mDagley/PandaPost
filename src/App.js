@@ -132,9 +132,8 @@ function App() {
           <h1>
             <span className='masthead-panda'>🐼</span>
             The Panda Post
-            <span className='masthead-panda'>🐼</span>
           </h1>
-          <p className='masthead-tagline'>✦ your daily dose of panda cuteness ✦</p>
+          <p className='masthead-tagline'>your daily dose of panda news</p>
         </div>
         <div className='masthead-rule'></div>
         <nav className='masthead-nav'>
