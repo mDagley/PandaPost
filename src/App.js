@@ -33,12 +33,21 @@ const ArticleGrid = ({ articles, error }) => {
   );
 };
 
+const CATEGORY_FILTERS = {
+  Pandas:   null,
+  Tech:     /tech|technology|research|scientist|study|data|genome|dna/i,
+  Food:     /food|eat|diet|bamboo|feed|nutrition|hungry/i,
+  Travel:   /zoo|safari|wild|habitat|china|sanctuary|reserve|park|born|birth/i,
+  Politics: /conservation|law|protect|policy|government|endangered|trade|treaty|illegal/i,
+};
+
 function App() {
   const [articles, setArticles] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [error, setError] = useState(null);
   const [partialError, setPartialError] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('Pandas');
 
   const getArticles = React.useCallback(() => {
     const oneMonthAgo = new Date();
@@ -105,13 +114,23 @@ function App() {
     getArticles();
   }, [getArticles]);
 
-  const totalPages = Array.isArray(articles) ? Math.ceil(articles.length / pageSize) : 0;
-  const displayedArticles = Array.isArray(articles)
-    ? articles.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+  const categoryRegex = CATEGORY_FILTERS[activeCategory];
+  const filteredArticles = Array.isArray(articles)
+    ? (categoryRegex
+        ? articles.filter(a => categoryRegex.test(a.title) || categoryRegex.test(a.description || ''))
+        : articles)
     : [];
+
+  const totalPages = Math.ceil(filteredArticles.length / pageSize);
+  const displayedArticles = filteredArticles.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   const handlePageSizeChange = (newSize) => {
     setPageSize(newSize);
+    setCurrentPage(1);
+  };
+
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
     setCurrentPage(1);
   };
 
@@ -136,11 +155,15 @@ function App() {
         </div>
         <nav className='masthead-nav'>
           <ul>
-            <li>Pandas</li>
-            <li>Tech</li>
-            <li>Food</li>
-            <li>Travel</li>
-            <li>Politics</li>
+            {Object.keys(CATEGORY_FILTERS).map(cat => (
+              <li
+                key={cat}
+                className={activeCategory === cat ? 'active' : ''}
+                onClick={() => handleCategoryChange(cat)}
+              >
+                {cat}
+              </li>
+            ))}
           </ul>
         </nav>
       </header>

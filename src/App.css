@@ -125,9 +125,15 @@ body {
   transition: all 0.2s;
 }
 
-.masthead-nav li:hover {
+.masthead-nav li:hover,
+.masthead-nav li.active {
   color: var(--pink);
   border-bottom-color: var(--pink);
+}
+
+.masthead-nav li.active {
+  font-weight: 700;
+  cursor: default;
 }
 
 /* ── Search ───────────────────────────────────── */
