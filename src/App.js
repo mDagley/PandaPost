@@ -87,6 +87,10 @@ function App() {
 
         setArticles([...newsArticles, ...guardianArticles].filter(isPandaRelated));
         setCurrentPage(1);
+      })
+      .catch(() => {
+        setError('Failed to load articles. Please try again later.');
+        setArticles([]);
       });
   }, []);
 
