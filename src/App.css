@@ -258,6 +258,48 @@ body {
 }
 .warning-banner button:hover { background: #ff6b90; }
 
+/* ── Articles Controls ────────────────────────── */
+
+.articles-controls {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 28px 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-size-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: default;
+}
+
+.page-size-label select {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--white);
+  border: 2px solid var(--sakura-light);
+  border-radius: 999px;
+  color: var(--text);
+  padding: 4px 12px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.2s;
+}
+
+.page-size-label select:focus {
+  outline: none;
+  border-color: var(--sakura);
+}
+
 /* ── Article Grid ─────────────────────────────── */
 
 #articleGrid {
@@ -421,36 +463,6 @@ h3::before { content: '🐼  '; }
   padding: 32px 24px 56px;
 }
 
-.page-size-control label {
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: default;
-}
-
-.page-size-control select {
-  font-family: 'Nunito', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  background: var(--white);
-  border: 2px solid var(--sakura-light);
-  border-radius: 999px;
-  color: var(--text);
-  padding: 4px 12px;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  transition: border-color 0.2s;
-}
-
-.page-size-control select:focus {
-  outline: none;
-  border-color: var(--sakura);
-}
 
 .page-controls {
   display: flex;

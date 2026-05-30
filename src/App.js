@@ -154,13 +154,21 @@ function App() {
           <button onClick={() => setPartialError(null)}>✕</button>
         </div>
       )}
+      <div className='articles-controls'>
+        <label className='page-size-label'>
+          Articles per page:
+          <select value={pageSize} onChange={e => handlePageSizeChange(Number(e.target.value))}>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </label>
+      </div>
       <ArticleGrid articles={displayedArticles} error={error} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        pageSize={pageSize}
         onPageChange={setCurrentPage}
-        onPageSizeChange={handlePageSizeChange}
       />
     </div>
   );
