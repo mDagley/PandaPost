@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useEffect, useState } from 'react';
 import axios from 'axios';
+import Pagination from './Pagination';
 
 
 const Article = (article) => {
@@ -98,6 +99,16 @@ function App() {
     getArticles();
   }, [getArticles]);
 
+  const totalPages = Array.isArray(articles) ? Math.ceil(articles.length / pageSize) : 0;
+  const displayedArticles = Array.isArray(articles)
+    ? articles.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+    : [];
+
+  const handlePageSizeChange = (newSize) => {
+    setPageSize(newSize);
+    setCurrentPage(1);
+  };
+
   return (
     <div className="App">
       <header className='nav-bar'>
@@ -124,7 +135,14 @@ function App() {
           <button onClick={() => setPartialError(null)}>✕</button>
         </div>
       )}
-      <ArticleGrid articles={articles} error={error} />
+      <ArticleGrid articles={displayedArticles} error={error} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        onPageChange={setCurrentPage}
+        onPageSizeChange={handlePageSizeChange}
+      />
     </div>
   );
 }
