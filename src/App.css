@@ -310,7 +310,7 @@ body {
 
 .article:hover {
   transform: translateY(-5px) scale(1.012);
-  box-shadow: 0 18px 44px rgba(200,150,210,0.22);
+  box-shadow: 0 18px 44px rgba(200,150,210,0.22), inset 3px 0 0 var(--pink);
 }
 
 /* ── Image area with overlaid pink frame ──────── */
@@ -385,7 +385,40 @@ body {
 
 .article-body {
   padding: 14px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
+
+.article-meta {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 6px;
+  opacity: 0.8;
+}
+
+.source-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 4;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: white;
+  padding: 3px 7px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.source-badge--newsapi  { background: linear-gradient(135deg, var(--pink), var(--lavender)); }
+.source-badge--guardian { background: #005689; }
+.source-badge--nyt      { background: #1a1a1a; }
 
 .article h2 {
   font-family: 'Josefin Sans', sans-serif;
@@ -403,6 +436,11 @@ body {
   color: var(--text-muted);
   font-weight: 600;
   margin-bottom: 12px;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .read-more {

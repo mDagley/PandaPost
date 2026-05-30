@@ -17,23 +17,28 @@ const decodeHtml = (str) => {
 };
 
 const Article = (article) => {
+  const sourceCls = article.source
+    ? `source-badge source-badge--${article.source.toLowerCase().replace(/\s+/g, '')}`
+    : null;
+  const meta = [article.source, formatDate(article.publishedAt)].filter(Boolean).join(' · ');
   return (
     <div className='article'>
       <div className='article-image-wrapper'>
+        {sourceCls && <span className={sourceCls}>{article.source}</span>}
         {article.urlToImage
           ? <img className='articleImage' src={article.urlToImage} alt={article.title} referrerPolicy="no-referrer"/>
           : <div className='article-no-image'/>
         }
       </div>
       <div className='article-body'>
-        {article.publishedAt && <span className='article-date'>{formatDate(article.publishedAt)}</span>}
+        {meta && <span className='article-meta'>{meta}</span>}
         <h2>{article.title}</h2>
         <p>{decodeHtml(article.description).replace('Read more...', '').trim()}</p>
         <a href={article.url} className='read-more' target="_blank" rel="noopener noreferrer">Read More</a>
       </div>
     </div>
   );
-}
+};
 
 const ArticleGrid = ({ articles, error }) => {
   if (error) return <h3 className='error-message'>{error}</h3>;
