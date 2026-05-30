@@ -40,9 +40,27 @@ const Article = (article) => {
   );
 };
 
+const SkeletonCard = () => (
+  <div className='article skeleton'>
+    <div className='skeleton-image'/>
+    <div className='skeleton-body'>
+      <div className='skeleton-line skeleton-meta'/>
+      <div className='skeleton-line skeleton-title'/>
+      <div className='skeleton-line skeleton-title skeleton-short'/>
+      <div className='skeleton-line skeleton-text'/>
+      <div className='skeleton-line skeleton-text'/>
+      <div className='skeleton-line skeleton-text skeleton-short'/>
+    </div>
+  </div>
+);
+
 const ArticleGrid = ({ articles, error }) => {
   if (error) return <h3 className='error-message'>{error}</h3>;
-  if (!articles || articles === '') return <h3>Loading...</h3>;
+  if (!articles || articles === '') return (
+    <div id='articleGrid'>
+      {Array.from({ length: 6 }, (_, i) => <SkeletonCard key={i} />)}
+    </div>
+  );
   if (articles.length === 0) return <h3>No articles found.</h3>;
   return (
     <div id='articleGrid'>
@@ -267,4 +285,5 @@ function App() {
   );
 }
 
+export { SkeletonCard };
 export default App;

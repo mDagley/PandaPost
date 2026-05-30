@@ -27,6 +27,11 @@
   50%       { opacity: 1;    transform: scale(1.1); }
 }
 
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
@@ -312,6 +317,34 @@ body {
   transform: translateY(-5px) scale(1.012);
   box-shadow: 0 18px 44px rgba(200,150,210,0.22), inset 3px 0 0 var(--pink);
 }
+
+.article.skeleton {
+  pointer-events: none;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(90deg, #f5dce8 25%, #ede0f5 50%, #f5dce8 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-body { padding: 14px 18px 20px; }
+
+.skeleton-line {
+  height: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #f5dce8 25%, #ede0f5 50%, #f5dce8 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-meta  { width: 40%; }
+.skeleton-title { width: 90%; height: 14px; }
+.skeleton-short { width: 60%; }
+.skeleton-text  { width: 100%; }
 
 /* ── Image area with overlaid pink frame ──────── */
 
