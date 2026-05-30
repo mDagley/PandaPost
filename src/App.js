@@ -121,7 +121,7 @@ const CATEGORY_FILTERS = {
 function App() {
   const [articles, setArticles] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(9);
+  const [pageSize, setPageSize] = useState(10);
   const [error, setError] = useState(null);
   const [partialError, setPartialError] = useState(null);
   const [activeCategory, setActiveCategory] = useState('All');
@@ -315,9 +315,9 @@ function App() {
         <label className='page-size-label'>
           Per page:
           <select value={pageSize} onChange={e => handlePageSizeChange(Number(e.target.value))}>
-            <option value={9}>9</option>
-            <option value={18}>18</option>
-            <option value={48}>48</option>
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+            <option value={40}>40</option>
           </select>
         </label>
       </div>
