@@ -5,13 +5,19 @@ import Pagination from './Pagination';
 
 
 const Article = (article) => {
-
   return (
     <div className='article'>
-      {article.urlToImage && <img className='articleImage' src={article.urlToImage} alt={article.title} referrerPolicy="no-referrer"/>}
-      <h2>{article.title}</h2>
-      <p>{(article.description || '').replace('Read more...', '')}</p>
-      <a href={article.url} target="_blank" rel="noopener noreferrer">Read More</a>
+      <div className='article-image-wrapper'>
+        {article.urlToImage
+          ? <img className='articleImage' src={article.urlToImage} alt={article.title} referrerPolicy="no-referrer"/>
+          : <div className='article-no-image'/>
+        }
+      </div>
+      <div className='article-body'>
+        <h2>{article.title}</h2>
+        <p>{(article.description || '').replace('Read more...', '')}</p>
+        <a href={article.url} className='read-more' target="_blank" rel="noopener noreferrer">Read More</a>
+      </div>
     </div>
   );
 }
@@ -111,12 +117,23 @@ function App() {
 
   return (
     <div className="App">
-      <header className='nav-bar'>
-        <div className='search-bar'>
-          <input type="text" className='search-field'></input>
-          <input type="submit" value="Search" className='search-button'></input>
+      <header className='masthead'>
+        <div className='masthead-rule'></div>
+        <div className='masthead-top'>
+          <div className='masthead-search'>
+            <input type="text" className='search-field' placeholder='Search articles...'/>
+            <input type="submit" value="Search" className='search-button'/>
+          </div>
+          <div className='masthead-date'>
+            {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+          </div>
         </div>
-        <nav>
+        <div className='masthead-title'>
+          <h1>The Panda Post</h1>
+          <p className='masthead-tagline'>The World's Premier Source for Panda News</p>
+        </div>
+        <div className='masthead-rule'></div>
+        <nav className='masthead-nav'>
           <ul>
             <li>Pandas</li>
             <li>Tech</li>
@@ -125,10 +142,8 @@ function App() {
             <li>Politics</li>
           </ul>
         </nav>
+        <div className='masthead-rule thin'></div>
       </header>
-      <div className='title'>
-        <h1>The Panda Post</h1>
-      </div>
       {partialError && (
         <div className='warning-banner'>
           {partialError}
