@@ -1,13 +1,15 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
-import { SkeletonCard, FeaturedArticle } from './App';
+import { render, screen, act } from '@testing-library/react';
+import App, { SkeletonCard, FeaturedArticle } from './App';
+import axios from 'axios';
 
 jest.mock('axios');
 
-test('renders masthead title', () => {
-  render(<App />);
-  const h1 = screen.getByRole('heading', { level: 1 });
-  expect(h1).toHaveTextContent('The Panda Post');
+test('renders masthead title', async () => {
+  axios.mockResolvedValue({
+    data: { articles: [], response: { results: [], docs: [] } },
+  });
+  await act(async () => { render(<App />); });
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('The Panda Post');
 });
 
 test('SkeletonCard renders a skeleton article card', () => {

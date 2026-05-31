@@ -328,6 +328,7 @@ body {
 .featured-image-wrapper {
   position: relative;
   flex: 0 0 55%;
+  min-height: 280px;
 }
 
 .featured-image-wrapper::before {
