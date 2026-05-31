@@ -82,7 +82,6 @@ const FeaturedArticle = ({ article }) => {
 
 const Footer = () => (
   <footer className='site-footer'>
-    <div className='footer-decoration'>🎋 🐼 🎋</div>
     <div className='footer-title'>The Panda Post</div>
     <div className='footer-credits'>
       Powered by{' '}
@@ -275,10 +274,7 @@ function App() {
           </div>
         </div>
         <div className='masthead-title'>
-          <h1>
-            <span className='masthead-panda'>🐼</span>
-            The Panda Post
-          </h1>
+          <h1>The Panda Post</h1>
           <p className='masthead-tagline'>your daily dose of panda news</p>
         </div>
         <nav className='masthead-nav'>
@@ -295,7 +291,7 @@ function App() {
           </ul>
         </nav>
       </header>
-      <div className='section-divider'>🎋</div>
+      <div className='section-divider'><span/></div>
       {partialError && (
         <div className='warning-banner'>
           {partialError}
