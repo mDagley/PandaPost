@@ -110,6 +110,13 @@ body {
   opacity: 0.6;
 }
 
+.masthead-logo {
+  color: var(--pink);
+  vertical-align: middle;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
 
 .masthead-nav {
   padding: 0 36px 16px;
@@ -150,40 +157,29 @@ body {
 /* ── Section Divider ──────────────────────────── */
 
 .section-divider {
-  position: relative;
-  text-align: center;
-  padding: 14px 0 0;
-  height: 14px;
+  display: flex;
+  align-items: center;
+  padding: 12px 24px 0;
+  gap: 8px;
+  color: rgba(160, 100, 190, 0.55);
 }
 
-.section-divider::before,
-.section-divider::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: calc(50% - 10px);
+.section-divider-line {
+  flex: 1;
   height: 1px;
-}
-
-.section-divider::before {
-  left: 0;
   background: linear-gradient(90deg, transparent, rgba(200,150,210,0.35));
 }
 
-.section-divider::after {
-  right: 0;
+.section-divider-line--right {
   background: linear-gradient(270deg, transparent, rgba(200,150,210,0.35));
 }
 
-.section-divider > span {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
+.section-divider-dot {
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: rgba(200,150,210,0.45);
-  vertical-align: middle;
-  position: relative;
-  top: -1px;
+  background: rgba(200,150,210,0.5);
+  flex-shrink: 0;
 }
 
 /* ── Search ───────────────────────────────────── */
@@ -570,13 +566,8 @@ body {
   gap: 8px;
 }
 
-.article-no-image::before {
-  content: '';
-  width: 40px;
-  height: 32px;
-  border: 2px solid rgba(200,150,210,0.4);
-  border-radius: 4px;
-  position: relative;
+.no-image-panda {
+  color: rgba(180, 130, 200, 0.45);
 }
 
 .article-no-image::after {
@@ -763,6 +754,12 @@ h3::before { content: '🐼  '; }
   margin-top: 8px;
 }
 
+
+.footer-logo {
+  color: var(--plum);
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
 
 .footer-title {
   font-family: 'Josefin Sans', sans-serif;

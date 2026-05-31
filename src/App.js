@@ -4,6 +4,31 @@ import axios from 'axios';
 import Pagination from './Pagination';
 
 
+const PandaLogo = ({ size = 28, className = '' }) => (
+  <svg width={size} height={size} viewBox="0 0 32 32" fill="none" className={className} aria-hidden="true">
+    <circle cx="16" cy="18" r="11" fill="white" stroke="currentColor" strokeWidth="1.5"/>
+    <circle cx="7.5" cy="8.5" r="4" fill="currentColor"/>
+    <circle cx="24.5" cy="8.5" r="4" fill="currentColor"/>
+    <ellipse cx="11.5" cy="16.5" rx="3.2" ry="3.8" fill="currentColor"/>
+    <ellipse cx="20.5" cy="16.5" rx="3.2" ry="3.8" fill="currentColor"/>
+    <circle cx="11.5" cy="16" r="1.3" fill="white"/>
+    <circle cx="20.5" cy="16" r="1.3" fill="white"/>
+    <ellipse cx="16" cy="21.5" rx="1.6" ry="1.1" fill="currentColor"/>
+  </svg>
+);
+
+const BambooSprigs = ({ flip = false }) => (
+  <svg width="52" height="18" viewBox="0 0 52 18" fill="none" style={flip ? { transform: 'scaleX(-1)' } : {}} aria-hidden="true">
+    <rect x="4"  y="3"  width="5" height="15" rx="2.5" fill="currentColor" opacity="0.55"/>
+    <rect x="2"  y="10" width="9" height="2"  rx="1"   fill="currentColor" opacity="0.55"/>
+    <rect x="14" y="0"  width="5" height="18" rx="2.5" fill="currentColor" opacity="0.65"/>
+    <rect x="12" y="8"  width="9" height="2"  rx="1"   fill="currentColor" opacity="0.65"/>
+    <rect x="24" y="4"  width="4" height="14" rx="2"   fill="currentColor" opacity="0.45"/>
+    <rect x="22.5" y="11" width="7" height="1.5" rx="0.75" fill="currentColor" opacity="0.45"/>
+    <path d="M19 3 Q28 1 30 7 Q24 9 19 3Z" fill="currentColor" opacity="0.45"/>
+  </svg>
+);
+
 const formatDate = (dateStr) => {
   if (!dateStr) return null;
   return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -27,7 +52,7 @@ const Article = (article) => {
         {sourceCls && <span className={sourceCls}>{article.source}</span>}
         {article.urlToImage
           ? <img className='articleImage' src={article.urlToImage} alt={article.title} referrerPolicy="no-referrer"/>
-          : <div className='article-no-image'/>
+          : <div className='article-no-image'><PandaLogo size={44} className='no-image-panda'/></div>
         }
       </div>
       <div className='article-body'>
@@ -67,7 +92,7 @@ const FeaturedArticle = ({ article }) => {
         {sourceCls && <span className={sourceCls}>{article.source}</span>}
         {article.urlToImage
           ? <img className='featured-image' src={article.urlToImage} alt={article.title} referrerPolicy="no-referrer"/>
-          : <div className='article-no-image featured-no-image'/>
+          : <div className='article-no-image featured-no-image'><PandaLogo size={64} className='no-image-panda'/></div>
         }
       </div>
       <div className='featured-body'>
@@ -82,6 +107,7 @@ const FeaturedArticle = ({ article }) => {
 
 const Footer = () => (
   <footer className='site-footer'>
+    <PandaLogo size={36} className='footer-logo'/>
     <div className='footer-title'>The Panda Post</div>
     <div className='footer-credits'>
       Powered by{' '}
@@ -274,7 +300,7 @@ function App() {
           </div>
         </div>
         <div className='masthead-title'>
-          <h1>The Panda Post</h1>
+          <h1><PandaLogo size={30} className='masthead-logo'/>The Panda Post</h1>
           <p className='masthead-tagline'>your daily dose of panda news</p>
         </div>
         <nav className='masthead-nav'>
@@ -291,7 +317,13 @@ function App() {
           </ul>
         </nav>
       </header>
-      <div className='section-divider'><span/></div>
+      <div className='section-divider'>
+        <span className='section-divider-line'/>
+        <BambooSprigs />
+        <span className='section-divider-dot'/>
+        <BambooSprigs flip />
+        <span className='section-divider-line section-divider-line--right'/>
+      </div>
       {partialError && (
         <div className='warning-banner'>
           {partialError}
